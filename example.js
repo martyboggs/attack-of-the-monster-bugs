@@ -56,9 +56,8 @@ function collision(a, b, distanceX, distanceY) {
 	return false;
 }
 
-// invert
-// setInterval(function () {
-// 	var c = B;
-// 	B = W;
-// 	W = c;
-// }, 1000)
+function invert() {
+	var c = B;
+	B = W;
+	W = c;
+}
