@@ -6,7 +6,6 @@ class Player {
 		this.translate = {};
 		this.facingRight = true;
 		this.action = 'none';
-		this.pullingOnce = false;
 		this.pullingRef = 0;
 	}
 
@@ -30,17 +29,15 @@ class Player {
 		}
 
 		if (objects.snakes[0].action === 'pulling') {
-			if (!this.pullingOnce) {
-				this.pullingOnce = true;
+			if (!this.pullingRef) {
 				this.pullingRef = this.translate.x;
 				setTimeout(function () {
-					this.pullingOnce = false;
 					this.pullingRef = 0;
-					objects.snakes[0].action = 'none';
-				}, 2000);
+					objects.snakes[0].action = 'holstered';
+				}.bind(this), 2000);
 			}
 			spr = playerSpr[5];
-			this.translate.x = this.pullingRef + Math.abs(frame%30-15);
+			this.translate.x = this.pullingRef + 2 * Math.abs(frame%30-15);
 		} else if (this.action === 'none') {
 			spr = playerSpr[0];
 		} else if (this.action === 'walking') {

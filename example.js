@@ -95,4 +95,5 @@ function reset() {
 	objects.snakes[0].translate = {x: 0, y: 20};
 	objects.snakes[0].action = 'none';
 	objects.snakes[0].slitherSpeed = 4;
+	objects.snakes[0].pullingRef = 0;
 }
