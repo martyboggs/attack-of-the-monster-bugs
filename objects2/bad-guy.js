@@ -3,8 +3,8 @@ class BadGuy {
 		this.health = 5;
 		this.power = 0;
 		this.items = [];
-		this.xRand = player.translate.x > 42 ? rand(0, 40) : rand(44, 84);
-		this.yRand = player.translate.y > 24 ? rand(0, 22) : rand(26, 48);
+		this.xRand = player.translate.x > 42 ? rand(1, 40) : rand(44, 83);
+		this.yRand = player.translate.y > 24 ? rand(1, 22) : rand(26, 47);
 		this.oscRand = rand(0, 10);
 		this.translate = {x: 20, y: this.yRand};
 		this.action = 'none';

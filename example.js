@@ -5,7 +5,7 @@ var snake;
 var frame = 0;
 var score = 0;
 var running = true;
-var spawnRate = 50;
+var spawnRate; // set in reset
 
 // bad guys spawn
 // if enough come together, they join to form a monster
@@ -36,8 +36,11 @@ function draw(dt) {
 		// nok.circle(Math.floor(Math.sin(timer) * 10), 70, 20) //circle(radius,x, y)
 		// nok.number(timer.toFixed(2), 0, 0) //number(value, x, y)
 
+		// gameplay
 		if (frame % spawnRate === 0) {
 			objects.badGuys.push(new BadGuy());
+		}
+		if (frame % 120 === 0 && spawnRate > 1) {
 			spawnRate -= 1;
 		}
 		
@@ -100,6 +103,7 @@ function reset() {
 	snake.slitherSpeed = 2;
 	snake.pullingRef = 0;
 	frame = 0;
+	spawnRate = 50;
 	for (var prop in objects) {
 		if (prop === 'players' || prop === 'snakes') continue;
 		objects[prop].length = 0;
