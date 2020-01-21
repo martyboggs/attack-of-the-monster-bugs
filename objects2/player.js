@@ -1,3 +1,8 @@
+// in update function, what comes first?
+// collisions
+// checking and acting on action
+// drawing objects
+
 class Player {
 	constructor() {
 		this.health = 5;
@@ -11,11 +16,14 @@ class Player {
 	}
 
 	update() {
+		var spr;
 		this.action = 'none';
+		var originalTranslate = {x: this.translate.x, y: this.translate.y};
 
 		if (nok.key.five || nok.key.eight || nok.key.seven || nok.key.nine) {
 			this.action = 'walking';
 		}
+
 		if (nok.key.five)
 			this.translate.y--
 		if (nok.key.eight)
@@ -32,6 +40,7 @@ class Player {
 		if (snake.action === 'pulling') {
 			if (!this.pullingRef) {
 				this.pullingRef = this.translate.x;
+				this.pullX = 15;
 				setTimeout(function () {
 					this.pullingRef = 0;
 					snake.action = 'holstered';
@@ -48,6 +57,11 @@ class Player {
 		if (this.facingRight) {
 			spr = flip(spr);
 		}
-		nok.sprite(spr, this.translate.x, this.translate.y - 10)
+
+		if (!collision(this, {translate: {x: 42, y: 28}}, 42, 24)) {
+			this.translate = originalTranslate;
+		}
+
+		nok.sprite(spr, this.translate.x - 3, this.translate.y - 11)
 	}
 }

@@ -30,6 +30,6 @@ class BadGuy2 {
 			objects.badGuy2s.splice(objects.badGuy2s.indexOf(this), 1);
 		}
 
-		nok.sprite(badSpr2, this.translate.x, this.translate.y - 2);
+		nok.sprite(badSpr2, this.translate.x - 2, this.translate.y - 3);
 	}
 }

@@ -8,6 +8,8 @@ class BadGuy {
 		this.oscRand = rand(0, 10);
 		this.translate = {x: 20, y: this.yRand};
 		this.action = 'none';
+		this.createdFrame = frame;
+		this.combineTime = rand(60 * 10, 60 * 100); 
 	}
 
 	update() {
@@ -19,22 +21,26 @@ class BadGuy {
 		if (this.action === 'none') {
 			this.translate.x = Math.floor(10 * Math.sin(timer + this.oscRand)) + this.xRand;
 			// collision with other bad guys
-			for (var i = 0; i < objects.badGuys.length; i += 1) {
-				if (objects.badGuys[i] === this) continue;
-				if (collision(this, objects.badGuys[i], 8, 8)) {
-					this.action = 'joining';
-					this.joiner = objects.badGuys[i];
-					objects.badGuys[i].action = 'joining';
-					objects.badGuys[i].joiner = this;
+			if (this.createdFrame > this.combineTime) {
+				for (var i = 0; i < objects.badGuys.length; i += 1) {
+					if (objects.badGuys[i] === this) continue;
+					if (collision(this, objects.badGuys[i], 8, 8)) {
+						this.action = 'joining';
+						this.joiner = objects.badGuys[i];
+						objects.badGuys[i].action = 'joining';
+						objects.badGuys[i].joiner = this;
+					}
 				}
 			}
 		} else if (this.action === 'joining') {
-			// follow
-			if (this.translate.x !== this.joiner.translate.x) {
-				this.translate.x += this.translate.x < this.joiner.translate.x ? 1 : -1;
-			}
-			if (this.translate.y !== this.joiner.translate.y) {
-				this.translate.y += this.translate.y < this.joiner.translate.y ? 1 : -1;
+			// go towards each other
+			if (frame % 8 === 0) {
+				if (this.translate.x !== this.joiner.translate.x) {
+					this.translate.x += this.translate.x < this.joiner.translate.x ? 1 : -1;
+				}
+				if (this.translate.y !== this.joiner.translate.y) {
+					this.translate.y += this.translate.y < this.joiner.translate.y ? 1 : -1;
+				}
 			}
 			// combine
 			if (collision(this, this.joiner, 1, 2)) {
@@ -48,6 +54,7 @@ class BadGuy {
 			objects.badGuys.splice(objects.badGuys.indexOf(this), 1);
 		}
 
-		nok.sprite(badSpr, this.translate.x, this.translate.y - 1);
+		nok.sprite(badSpr, this.translate.x - 2, this.translate.y - 1);
+		this.createdFrame++;
 	}
 }

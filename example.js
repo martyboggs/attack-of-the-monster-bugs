@@ -3,9 +3,9 @@ var objects;
 var player;
 var snake;
 var frame = 0;
-var spr;
-var blankSpr = [[]];
+var score = 0;
 var running = true;
+var spawnRate = 50;
 
 // bad guys spawn
 // if enough come together, they join to form a monster
@@ -14,9 +14,9 @@ var running = true;
 function init() {
 	//sprites are a 2d array -1 is transparent 0-6 are the patterns
 	objects = { // order dictates depth
+		snakes: [],
 		badGuys: [],
 		badGuy2s: [],
-		snakes: [],
 		sparks: [],
 		players: [],
 	};
@@ -36,8 +36,9 @@ function draw(dt) {
 		// nok.circle(Math.floor(Math.sin(timer) * 10), 70, 20) //circle(radius,x, y)
 		// nok.number(timer.toFixed(2), 0, 0) //number(value, x, y)
 
-		if (frame % 50 === 0) {
+		if (frame % spawnRate === 0) {
 			objects.badGuys.push(new BadGuy());
+			spawnRate -= 1;
 		}
 		
 		for (var prop in objects) {
@@ -45,8 +46,6 @@ function draw(dt) {
 				objects[prop][i].update();
 			}
 		}
-
-		nok.sprite(blankSpr, 0, 0);
 
 		frame++;
 	}
@@ -88,7 +87,7 @@ function dead() {
 	setTimeout(function () {
 		invert();
 		reset();
-	}, 1000);
+	}, 2000);
 }
 
 function reset() {
@@ -98,8 +97,9 @@ function reset() {
 	player.facingRight = true;
 	snake.translate = {x: 0, y: 20};
 	snake.action = 'none';
-	snake.slitherSpeed = 4;
+	snake.slitherSpeed = 2;
 	snake.pullingRef = 0;
+	frame = 0;
 	for (var prop in objects) {
 		if (prop === 'players' || prop === 'snakes') continue;
 		objects[prop].length = 0;

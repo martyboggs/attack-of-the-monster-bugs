@@ -1,3 +1,4 @@
+var blankSpr = [[]];
 for (var i = 0; i < 48; i += 1) {
 	blankSpr[i] = [];
 	for (var j = 0; j < 84; j += 1) {
@@ -18,3 +19,8 @@ canvas.addEventListener('mousemove', function (e) {
 		blankSpr[Math.floor(e.clientY/size)][Math.floor(e.clientX/size)] = 1;
 	}
 });
+objects.drawTool = [{
+	update: function () {
+		nok.sprite(blankSpr, 0, 0);
+	}
+}];

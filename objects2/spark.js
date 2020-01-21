@@ -9,11 +9,8 @@ class Spark {
 		this.translate.x += this.speed.x;
 		this.translate.y += this.speed.y;
 		this.speed.y += 0.5; // gravity;
-
-		var x = Math.round(this.translate.x);
-		var y = Math.round(this.translate.y);
 		
-		nok.line(x, y, x, y);
+		nok.line(this.translate.x, this.translate.y, this.translate.x, this.translate.y);
 
 		if (this.translate.y > this.originalY) {
 			objects.sparks.splice(objects.sparks.indexOf(this), 1);
