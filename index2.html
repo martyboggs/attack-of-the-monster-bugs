@@ -22,11 +22,21 @@
 <body>
 	<script src="nok.js"></script>
 	<script src="objects2/spark.js"></script>
+	<script src="objects2/power-up.js"></script>
 	<script src="objects2/bad-guy.js"></script>
 	<script src="objects2/bad-guy2.js"></script>
 	<script src="objects2/snake.js"></script>
 	<script src="objects2/player.js"></script>
 	<script src="sprites.js"></script>
+	<script>
+		var objects = { // order dictates depth
+			snakes: [],
+			badGuys: [],
+			badGuy2s: [],
+			sparks: [],
+			players: [],
+		};
+	</script>
 	<script src="example.js"></script>
 	<!-- <script src="draw-tool.js"></script> -->
 </body>

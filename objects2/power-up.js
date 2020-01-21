@@ -1,7 +1,7 @@
-class Spark {
+class PowerUp {
 	constructor(translate) {
 		this.translate = {x: translate.x + 2, y: translate.y + 3};
-		this.speed = {x: Math.random() - 0.5, y: -5 * Math.random()};
+		this.speed = {x: Math.random(), y: -5 * Math.random()};
 		this.originalY = this.translate.y + 4;
 	}
 

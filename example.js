@@ -1,11 +1,11 @@
 var timer = 0
-var objects;
 var player;
 var snake;
 var frame = 0;
 var score = 0;
 var running = true;
 var spawnRate; // set in reset
+var round = 1;
 
 // bad guys spawn
 // if enough come together, they join to form a monster
@@ -13,13 +13,6 @@ var spawnRate; // set in reset
 
 function init() {
 	//sprites are a 2d array -1 is transparent 0-6 are the patterns
-	objects = { // order dictates depth
-		snakes: [],
-		badGuys: [],
-		badGuy2s: [],
-		sparks: [],
-		players: [],
-	};
 	player = new Player();
 	snake = new Snake();
 	objects.players.push(player);
@@ -34,14 +27,21 @@ function draw(dt) {
 		// nok.line(10, 10, 50, 25) //line(start x, start y, end x, end y)
 		// nok.rect(6, 20 + Math.sin(timer)*20, 20 + Math.cos(timer) * 20, 10, 10) // rect(pattern 0-6, x, y, width, height)
 		// nok.circle(Math.floor(Math.sin(timer) * 10), 70, 20) //circle(radius,x, y)
-		// nok.number(timer.toFixed(2), 0, 0) //number(value, x, y)
+		nok.number(score, 1, 1) //number(value, x, y)
 
 		// gameplay
 		if (frame % spawnRate === 0) {
 			objects.badGuys.push(new BadGuy());
 		}
-		if (frame % 120 === 0 && spawnRate > 1) {
-			spawnRate -= 1;
+		if (frame % 120 === 0) {
+			if (spawnRate >= [0, 12, 10, 8, 6, 4][round]) {
+				spawnRate -= 1;
+			} else {
+				spawnRate = 50;
+				if (round >= 5) alert('you win');
+				round++;
+			}
+			
 		}
 		
 		for (var prop in objects) {
@@ -51,6 +51,9 @@ function draw(dt) {
 		}
 
 		frame++;
+		if (frame % 600 === 0) {
+			score += 5;
+		}
 	}
 }
 
@@ -103,6 +106,7 @@ function reset() {
 	snake.slitherSpeed = 2;
 	snake.pullingRef = 0;
 	frame = 0;
+	score = 0;
 	spawnRate = 50;
 	for (var prop in objects) {
 		if (prop === 'players' || prop === 'snakes') continue;

@@ -10,6 +10,7 @@ class BadGuy {
 		this.action = 'none';
 		this.createdFrame = frame;
 		this.combineTime = rand(60 * 10, 60 * 100); 
+		this.joiner;
 	}
 
 	update() {
@@ -52,6 +53,7 @@ class BadGuy {
 
 		if (this.health <= 0) {
 			objects.badGuys.splice(objects.badGuys.indexOf(this), 1);
+			score += 2;
 		}
 
 		nok.sprite(badSpr, this.translate.x - 2, this.translate.y - 1);
