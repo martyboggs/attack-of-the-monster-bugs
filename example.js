@@ -1,6 +1,7 @@
 var timer = 0
 var objects;
 var player;
+var snake;
 var frame = 0;
 var spr;
 var blankSpr = [[]];
@@ -8,21 +9,20 @@ var running = true;
 
 // bad guys spawn
 // if enough come together, they join to form a monster
-// 
+// try to make it so multiple playthroughs aren't necessary to know how to win (points should teach) (positive reinforcement)
 
 function init() {
 	//sprites are a 2d array -1 is transparent 0-6 are the patterns
 	objects = {
 		badGuys: [],
+		badGuy2s: [],
 		snakes: [],
 		players: [],
 	};
-	for (var i = 0; i < 10; i += 1) {
-		objects.badGuys.push(new BadGuy());
-	}
 	player = new Player();
+	snake = new Snake();
 	objects.players.push(player);
-	objects.snakes.push(new Snake());
+	objects.snakes.push(snake);
 	reset();
 }
 function draw(dt) {
@@ -32,8 +32,12 @@ function draw(dt) {
 		nok.clear(0) //clear(pattern 0-6)
 		// nok.line(10, 10, 50, 25) //line(start x, start y, end x, end y)
 		// nok.rect(6, 20 + Math.sin(timer)*20, 20 + Math.cos(timer) * 20, 10, 10) // rect(pattern 0-6, x, y, width, height)
-		nok.circle(Math.floor(Math.sin(timer) * 10), 70, 20) //circle(radius,x, y)
+		// nok.circle(Math.floor(Math.sin(timer) * 10), 70, 20) //circle(radius,x, y)
 		// nok.number(timer.toFixed(2), 0, 0) //number(value, x, y)
+
+		if (frame % 50 === 0) {
+			objects.badGuys.push(new BadGuy());
+		}
 		
 		for (var prop in objects) {
 			for (var i = 0; i < objects[prop].length; i += 1) {
@@ -77,7 +81,6 @@ function invert() {
 }
 
 function dead() {
-	//
 	player.dead = true;
 	running = false;
 	invert();
@@ -92,8 +95,19 @@ function reset() {
 	player.translate = {x: 10, y: 15};
 	player.action = 'none';
 	player.facingRight = true;
-	objects.snakes[0].translate = {x: 0, y: 20};
-	objects.snakes[0].action = 'none';
-	objects.snakes[0].slitherSpeed = 4;
-	objects.snakes[0].pullingRef = 0;
+	snake.translate = {x: 0, y: 20};
+	snake.action = 'none';
+	snake.slitherSpeed = 4;
+	snake.pullingRef = 0;
+	for (var prop in objects) {
+		if (prop === 'players' || prop === 'snakes') continue;
+		objects[prop].length = 0;
+	}
+}
+
+function avg(a, b) {
+	return {translate: {
+		x: Math.min(a.translate.x, b.translate.x) + Math.round(Math.abs(a.translate.x - b.translate.x) / 2),
+		y: Math.min(a.translate.y, b.translate.y) + Math.round(Math.abs(a.translate.y - b.translate.y) / 2)
+	}};
 }

@@ -28,12 +28,12 @@ class Player {
 			this.facingRight = true;
 		}
 
-		if (objects.snakes[0].action === 'pulling') {
+		if (snake.action === 'pulling') {
 			if (!this.pullingRef) {
 				this.pullingRef = this.translate.x;
 				setTimeout(function () {
 					this.pullingRef = 0;
-					objects.snakes[0].action = 'holstered';
+					snake.action = 'holstered';
 				}.bind(this), 2000);
 			}
 			spr = playerSpr[5];

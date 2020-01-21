@@ -29,7 +29,6 @@ class Snake {
 				this.slitherSpeed = 10;
 			}
 		} else if (this.action === 'striking') {
-			console.log(player.facingRight ? 5 : -5);
 			nok.sprite(snakeSpr[Math.floor(frame/8*this.slitherSpeed)%4], player.translate.x + (player.facingRight ? 5 : -14), player.translate.y - 5);
 			if (!nok.key.six) {
 				this.action = 'holstered';
