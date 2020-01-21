@@ -1,6 +1,6 @@
 class BadGuy2 {
 	constructor(translate) {
-		this.health = 5;
+		this.health = 25;
 		this.power = 0;
 		this.items = [];
 		this.xRand = rand(10, 70);
@@ -24,6 +24,10 @@ class BadGuy2 {
 			if (this.translate.y !== player.translate.y) {
 				this.translate.y += this.translate.y < player.translate.y ? 1 : -1;
 			}	
+		}
+
+		if (this.health <= 0) {
+			objects.badGuy2s.splice(objects.badGuy2s.indexOf(this), 1);
 		}
 
 		nok.sprite(badSpr2, this.translate.x, this.translate.y - 2);

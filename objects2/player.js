@@ -7,6 +7,7 @@ class Player {
 		this.facingRight = true;
 		this.action = 'none';
 		this.pullingRef = 0;
+		this.pullX = 15;
 	}
 
 	update() {
@@ -37,7 +38,8 @@ class Player {
 				}.bind(this), 2000);
 			}
 			spr = playerSpr[5];
-			this.translate.x = this.pullingRef + 2 * Math.abs(frame%30-15);
+			this.translate.x = this.pullingRef + 2 * Math.abs(this.pullX%30-15);
+			this.pullX += 1;
 		} else if (this.action === 'none') {
 			spr = playerSpr[0];
 		} else if (this.action === 'walking') {

@@ -1,6 +1,6 @@
 class Snake {
 	constructor() {
-		this.translate;
+		this.translate = {};
 		this.action = 'none';
 		this.slitherSpeed;
 	}
@@ -11,7 +11,7 @@ class Snake {
 			if (collision(player, this, 10, 3)) {
 				this.action = 'pulling';
 			}
-			nok.sprite(snakeSpr[Math.floor(frame/8*this.slitherSpeed)%4], this.translate.x, this.translate.y - 1);
+			nok.sprite(snakeSpr[Math.floor(frame/8*this.slitherSpeed)%4], this.translate.x - 6, this.translate.y - 1);
 		} else if (this.action === 'pulling') {
 			this.translate.x = player.facingRight ? player.translate.x : player.translate.x - 8;
 			this.translate.y = player.translate.y - 4;
@@ -22,16 +22,37 @@ class Snake {
 				player.facingRight?player.translate.x+17:player.translate.x-10, 
 				player.translate.y - 12 + wobble);
 		} else if (this.action === 'holstered') {
-			nok.sprite(snakeSpr[Math.floor(frame/8*this.slitherSpeed)%4], player.translate.x - 5, player.translate.y - 5);
 			this.slitherSpeed = 2;
 			if (nok.key.six) {
 				this.action = 'striking';
 				this.slitherSpeed = 10;
 			}
+			this.translate.x = player.translate.x + 1;
+			this.translate.y = player.translate.y - 4;
+			nok.sprite(snakeSpr[Math.floor(frame/8*this.slitherSpeed)%4], this.translate.x - 6, this.translate.y - 1);
 		} else if (this.action === 'striking') {
-			nok.sprite(snakeSpr[Math.floor(frame/8*this.slitherSpeed)%4], player.translate.x + (player.facingRight ? 5 : -14), player.translate.y - 5);
+			this.strike();
 			if (!nok.key.six) {
 				this.action = 'holstered';
+			}
+			this.translate.x = player.translate.x + (player.facingRight ? 11 : -8);
+			this.translate.y = player.translate.y - 4;
+			nok.sprite(snakeSpr[Math.floor(frame/8*this.slitherSpeed)%4], this.translate.x - 6, this.translate.y - 1);
+		}
+	}
+
+	strike() {
+		for (var prop in objects) {
+			if (prop === 'badGuys' || prop === 'badGuy2s') {
+				for (var i = 0; i < objects[prop].length; i += 1) {
+					if (collision(this, objects[prop][i], 10, 3)) {
+						console.log('whoooo');
+						for (var j = 0; j < 3; j += 1) {
+							objects.sparks.push(new Spark(objects[prop][i].translate));
+							objects[prop][i].health -= 1;
+						}
+					}
+				}
 			}
 		}
 	}

@@ -13,10 +13,11 @@ var running = true;
 
 function init() {
 	//sprites are a 2d array -1 is transparent 0-6 are the patterns
-	objects = {
+	objects = { // order dictates depth
 		badGuys: [],
 		badGuy2s: [],
 		snakes: [],
+		sparks: [],
 		players: [],
 	};
 	player = new Player();

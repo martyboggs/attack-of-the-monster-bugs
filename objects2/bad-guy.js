@@ -3,8 +3,8 @@ class BadGuy {
 		this.health = 5;
 		this.power = 0;
 		this.items = [];
-		this.xRand = rand(10, 70);
-		this.yRand = rand(30, 40);
+		this.xRand = player.translate.x > 42 ? rand(0, 40) : rand(44, 84);
+		this.yRand = player.translate.y > 24 ? rand(0, 22) : rand(26, 48);
 		this.oscRand = rand(0, 10);
 		this.translate = {x: 20, y: this.yRand};
 		this.action = 'none';
@@ -42,6 +42,10 @@ class BadGuy {
 				objects.badGuys.splice(objects.badGuys.indexOf(this.joiner), 1);
 				objects.badGuy2s.push(new BadGuy2(this.translate));
 			}
+		}
+
+		if (this.health <= 0) {
+			objects.badGuys.splice(objects.badGuys.indexOf(this), 1);
 		}
 
 		nok.sprite(badSpr, this.translate.x, this.translate.y - 1);
