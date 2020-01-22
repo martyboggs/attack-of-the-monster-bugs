@@ -1,3 +1,4 @@
+drawing = true;
 var blankSpr = [[]];
 for (var i = 0; i < 48; i += 1) {
 	blankSpr[i] = [];
@@ -8,19 +9,26 @@ for (var i = 0; i < 48; i += 1) {
 var pencil = false;
 canvas.addEventListener('mousedown', function (e) {
 	pencil = true;
+	write(e);
 });
 canvas.addEventListener('mouseup', function (e) {
 	pencil = false;
 });
-canvas.addEventListener('mousemove', function (e) {
-	console.log(e);
+canvas.addEventListener('mousemove', write);
+function write(e) {
 	var size = innerHeight / 48;
 	if (pencil) {
-		blankSpr[Math.floor(e.clientY/size)][Math.floor(e.clientX/size)] = 1;
+		if (e.ctrlKey) {
+			blankSpr[Math.floor(e.clientY/size)][Math.floor(e.clientX/size)] = 0;
+		} else {
+			blankSpr[Math.floor(e.clientY/size)][Math.floor(e.clientX/size)] = 1;
+		}
 	}
+}
+setTimeout(function () {
+	objects.drawTools = [{
+		update: function () {
+			nok.sprite(blankSpr, 0, 0);
+		}
+	}];
 });
-objects.drawTool = [{
-	update: function () {
-		nok.sprite(blankSpr, 0, 0);
-	}
-}];

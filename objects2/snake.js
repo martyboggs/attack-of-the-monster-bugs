@@ -3,14 +3,16 @@ class Snake {
 		this.translate = {};
 		this.action = 'none';
 		this.slitherSpeed; // set in reset
+		this.sleeping = 0;
 	}
 
 	update() {
 		if (this.action === 'none') {
 			this.translate.x = Math.floor(4 * Math.sin(timer)) + 50;
-			if (collision(player, this, 10, 3)) {
+			if (this.sleeping <= 0 && collision(player, this, 10, 3)) {
 				this.action = 'pulling';
 			}
+			this.sleeping--;
 		} else if (this.action === 'pulling') {
 			this.translate.x = player.facingRight ? player.translate.x : player.translate.x - 8;
 			this.translate.y = player.translate.y - 5;
@@ -35,6 +37,13 @@ class Snake {
 			}
 			this.translate.x = player.translate.x + (player.facingRight ? 9 : -9);
 			this.translate.y = player.translate.y - 5;
+		}
+
+		if (spawnRate < 45 && spawnRate > 40 && frame % 500 === 0 && 
+			(this.action === 'holstered' || this.action === 'striking')) {
+				this.action = 'none';
+				this.sleeping = 20;
+				this.slitherSpeed = 4;
 		}
 
 		if (this.action !== 'pulling') {

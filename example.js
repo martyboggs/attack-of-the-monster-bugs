@@ -6,10 +6,14 @@ var score = 0;
 var running = true;
 var spawnRate; // set in reset
 var round = 1;
+var drawing;
 
-// bad guys spawn
-// if enough come together, they join to form a monster
 // try to make it so multiple playthroughs aren't necessary to know how to win (points should teach) (positive reinforcement)
+// powerups build new weapon
+// new enemies balance out new weapons
+// bosses in the slow parts
+// bonus points for guys killed in 5 frames for example
+// one other interesting scene to capitalize on breaking up environment monotony
 
 function init() {
 	//sprites are a 2d array -1 is transparent 0-6 are the patterns
@@ -27,7 +31,23 @@ function draw(dt) {
 		// nok.line(10, 10, 50, 25) //line(start x, start y, end x, end y)
 		// nok.rect(6, 20 + Math.sin(timer)*20, 20 + Math.cos(timer) * 20, 10, 10) // rect(pattern 0-6, x, y, width, height)
 		// nok.circle(Math.floor(Math.sin(timer) * 10), 70, 20) //circle(radius,x, y)
+
+		// ground
+		for (var i = 0; i < 5; i += 1) {
+			for (var j = 0; j < 5; j += 1) {
+				nok.line(
+					16 * i + 7 + (j % 2 === 0 ? 5 : 0), 
+					8 * j + 6, 
+					16 * i + 8 + (j % 2 === 0 ? 5 : 0), 
+					8 * j + 6
+				);
+			}
+		}
+
 		nok.number(score, 1, 1) //number(value, x, y)
+		for (var i = 0; i < player.build.length; i += 1) {
+			nok.sprite(powerUpSpr[player.build[i]][frame%2], 20 + 5 * i, 1);
+		}
 
 		// gameplay
 		if (frame % spawnRate === 0) {
@@ -41,7 +61,6 @@ function draw(dt) {
 				if (round >= 5) alert('you win');
 				round++;
 			}
-			
 		}
 		
 		for (var prop in objects) {
@@ -87,7 +106,7 @@ function invert() {
 }
 
 function dead() {
-	player.dead = true;
+	if (drawing) return;
 	running = false;
 	invert();
 	setTimeout(function () {
@@ -98,16 +117,17 @@ function dead() {
 
 function reset() {
 	running = true;
-	player.translate = {x: 10, y: 15};
-	player.action = 'none';
-	player.facingRight = true;
-	snake.translate = {x: 0, y: 20};
-	snake.action = 'none';
-	snake.slitherSpeed = 2;
-	snake.pullingRef = 0;
 	frame = 0;
 	score = 0;
 	spawnRate = 50;
+	player.action = 'none';
+	player.translate = {x: 12, y: 15};
+	player.facingRight = true;
+	player.build = [];
+	snake.action = 'none';
+	snake.translate = {x: 0, y: 20};
+	snake.slitherSpeed = 2;
+	snake.pullingRef = 0;
 	for (var prop in objects) {
 		if (prop === 'players' || prop === 'snakes') continue;
 		objects[prop].length = 0;
@@ -119,4 +139,17 @@ function avg(a, b) {
 		x: Math.min(a.translate.x, b.translate.x) + Math.round(Math.abs(a.translate.x - b.translate.x) / 2),
 		y: Math.min(a.translate.y, b.translate.y) + Math.round(Math.abs(a.translate.y - b.translate.y) / 2)
 	}};
+}
+
+var gunModel = [1, 2, 2, 3];
+function buildGun(type) {
+	if (gunModel[player.build.length] === type) {
+		player.build.push(type);
+		if (player.build.length === gunModel.length) {
+			player.build = [];
+			new Gun();
+		}
+	} else {
+		player.build = [];
+	}
 }
