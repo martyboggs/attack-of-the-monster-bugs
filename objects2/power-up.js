@@ -1,19 +1,30 @@
 class PowerUp {
 	constructor(translate) {
-		this.translate = {x: translate.x + 2, y: translate.y + 3};
-		this.speed = {x: Math.random(), y: -5 * Math.random()};
-		this.originalY = this.translate.y + 4;
+		this.translate = {x: translate.x, y: translate.y};
+		this.type = rand(0, 3);
+		this.created = frame;
 	}
 
 	update() {
-		this.translate.x += this.speed.x;
-		this.translate.y += this.speed.y;
-		this.speed.y += 0.5; // gravity;
-		
-		nok.line(this.translate.x, this.translate.y, this.translate.x, this.translate.y);
-
-		if (this.translate.y > this.originalY) {
-			objects.sparks.splice(objects.sparks.indexOf(this), 1);
+		// pick up powerup
+		if (collision(player, this, 2, 2)) {
+			objects.powerUps.splice(objects.powerUps.indexOf(this), 1);
+			score += 1;
 		}
+
+		// you destroyed the powerup
+		if (frame - this.created >= 20) {
+			if (snake.action === 'striking' && collision(this, snake, 10, 3)) {
+				objects.powerUps.splice(objects.powerUps.indexOf(this), 1);
+				console.log('destroyed');
+			}
+		}
+
+		// too slow
+		if (frame - this.created >= 120) {
+			objects.powerUps.splice(objects.powerUps.indexOf(this), 1);
+		}
+
+		nok.sprite(powerUpSpr[frame%2], this.translate.x - 1, this.translate.y - 1);
 	}
 }

@@ -3,14 +3,15 @@ class BadGuy {
 		this.health = 5;
 		this.power = 0;
 		this.items = [];
-		this.xRand = player.translate.x > 42 ? rand(1, 40) : rand(44, 83);
-		this.yRand = player.translate.y > 24 ? rand(1, 22) : rand(26, 47);
+		this.xRand = player.translate.x > 42 ? rand(2, 40) : rand(44, 82);
+		this.yRand = player.translate.y > 24 ? rand(2, 22) : rand(26, 46);
 		this.oscRand = rand(0, 10);
 		this.translate = {x: 20, y: this.yRand};
 		this.action = 'none';
 		this.createdFrame = frame;
 		this.combineTime = rand(60 * 10, 60 * 100); 
 		this.joiner;
+		this.joined = false;
 	}
 
 	update() {
@@ -35,6 +36,11 @@ class BadGuy {
 			}
 		} else if (this.action === 'joining') {
 			// go towards each other
+			if (this.joiner.joined) {
+				this.joiner = null;
+				this.action = 'none';
+				return;
+			}
 			if (frame % 8 === 0) {
 				if (this.translate.x !== this.joiner.translate.x) {
 					this.translate.x += this.translate.x < this.joiner.translate.x ? 1 : -1;
@@ -45,6 +51,8 @@ class BadGuy {
 			}
 			// combine
 			if (collision(this, this.joiner, 1, 2)) {
+				this.joined = true;
+				this.joiner.joined = true;
 				objects.badGuys.splice(objects.badGuys.indexOf(this), 1);
 				objects.badGuys.splice(objects.badGuys.indexOf(this.joiner), 1);
 				objects.badGuy2s.push(new BadGuy2(this.translate));
@@ -54,6 +62,7 @@ class BadGuy {
 		if (this.health <= 0) {
 			objects.badGuys.splice(objects.badGuys.indexOf(this), 1);
 			score += 2;
+			if (frame % 7 === 0) objects.powerUps.push(new PowerUp(this.translate));
 		}
 
 		nok.sprite(badSpr, this.translate.x - 2, this.translate.y - 1);

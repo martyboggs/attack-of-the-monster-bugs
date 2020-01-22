@@ -48,6 +48,7 @@ class Player {
 			}
 			spr = playerSpr[5];
 			this.translate.x = this.pullingRef + 2 * Math.abs(this.pullX%30-15);
+			this.facingRight = Math.abs(this.pullX%30) > 15;
 			this.pullX += 1;
 		} else if (this.action === 'none') {
 			spr = playerSpr[0];

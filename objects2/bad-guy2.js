@@ -29,6 +29,7 @@ class BadGuy2 {
 		if (this.health <= 0) {
 			objects.badGuy2s.splice(objects.badGuy2s.indexOf(this), 1);
 			score += 5;
+			if (frame % 3 === 0) objects.powerUps.push(new PowerUp(this.translate));
 		}
 
 		nok.sprite(badSpr2, this.translate.x - 2, this.translate.y - 3);
