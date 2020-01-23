@@ -24,15 +24,14 @@ class Bullet {
 	}
 
 	strike() {
-		for (var prop in objects) {
-			if (prop === 'badGuys' || prop === 'badGuy2s' || prop === 'boss') {
-				for (var i = 0; i < objects[prop].length; i += 1) {
-					if (collision(this, objects[prop][i], 10, 3)) {
-						objects.bullets.splice(objects.bullets.indexOf(this), 1);
-						objects[prop][i].health -= 1;
-						for (var j = 0; j < 3; j += 1) {
-							objects.sparks.push(new Spark(objects[prop][i].translate));
-						}
+		var enemies = ['badGuy2s', 'bosses', 'badGuys'];
+		for (var i = 0; i < enemies.length; i += 1) {
+			for (var j = 0; j < objects[enemies[i]].length; j += 1) {
+				if (collision(this, objects[enemies[i]][j], 10, 3)) {
+					objects.bullets.splice(objects.bullets.indexOf(this), 1);
+					objects[enemies[i]][j].health -= 1;
+					for (var k = 0; k < 3; k += 1) {
+						objects.sparks.push(new Spark(objects[enemies[i]][j].translate));
 					}
 				}
 			}

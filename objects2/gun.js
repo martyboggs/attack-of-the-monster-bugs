@@ -47,19 +47,18 @@ class Gun {
 
 	findTarget() {
 		var taken;
-		for (var prop in objects) {
-			if (prop === 'badGuys' || prop === 'badGuy2s') {
-				for (var i = 0; i < objects[prop].length; i += 1) {
-					taken = false;
-					for (var j = 0; j < objects.guns.length; j += 1) {
-						if (objects[prop][i] === objects.guns[j].target) {
-							taken = true;
-							break;
-						}
+		var enemies = ['badGuy2s', 'bosses', 'badGuys'];
+		for (var i = 0; i < enemies.length; i += 1) {
+			for (var j = 0; j < objects[enemies[i]].length; j += 1) {
+				taken = false;
+				for (var k = 0; k < objects.guns.length; k += 1) {
+					if (objects[enemies[i]][j] === objects.guns[k].target) {
+						taken = true;
+						break;
 					}
-					if (!taken) {
-						return objects[prop][i];
-					}
+				}
+				if (!taken) {
+					return objects[enemies[i]][j];
 				}
 			}
 		}

@@ -7,9 +7,10 @@ var running = true;
 var spawnRate; // set in reset
 var round = 1;
 var drawing;
+var enemies = ['badGuys', 'badGuy2s', 'bosses'];
 var gunVibrate = 0;
 var gunCoords = [
-	[20, 4], [20, 1], [23, 1], [26, 1],
+	[20.5, 4.5], [20.5, 1.5], [23.5, 1.5], [26.5, 1.5],
 ];
 
 // try to make it so multiple playthroughs aren't necessary to know how to win (points should teach) (positive reinforcement)
@@ -45,13 +46,6 @@ function draw(dt) {
 		}
 
 		nok.number(score, 1, 1) //number(value, x, y)
-		// show gun progress
-		for (var i = 0; i < player.build.length; i += 1) {
-			nok.sprite(powerUpSpr[player.build[i]][frame%2], 
-				gunCoords[i][0] + (frame%2===0?gunVibrate:0), 
-				gunCoords[i][1]
-			);
-		}
 
 		// gameplay
 		if (frame % spawnRate === 0) {
@@ -146,18 +140,13 @@ function avg(a, b) {
 }
 
 var gunModel = [1, 2, 2, 3];
-function buildGun(type) {
-	if (gunModel[player.build.length] === type) {
-		player.build.push(type);
-		if (player.build.length === gunModel.length) {
-			gunVibrate = 1;
-			setTimeout(function () {
-				player.build = [];
-				objects.guns.push(new Gun());
-				gunVibrate = 0;
-			}, 2000);
-		}
-	} else {
-		player.build = [];
+function gunClear() {
+	for (var i = 0; i < player.build.length; i += 1) {
+		objects.powerUps.splice(objects.powerUps.indexOf(player.build[i]), 1);
 	}
+	player.build = [];
+}
+
+function lerp(start, end, amt) {
+	return (1-amt)*start+amt*end;
 }
