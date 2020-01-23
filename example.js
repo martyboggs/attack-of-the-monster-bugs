@@ -52,11 +52,12 @@ function draw(dt) {
 			objects.badGuys.push(new BadGuy());
 		}
 		if (frame % 120 === 0) {
-			if (spawnRate >= [0, 12, 10, 8, 6, 4][round]) {
+			if ([1, 12, 10, 8, 6, 4][round] && spawnRate >= [1, 12, 10, 8, 6, 4][round]) {
+				spawnRate -= 1;
+			} else if (spawnRate >= 4) { // beyond round 5
 				spawnRate -= 1;
 			} else {
 				spawnRate = 50;
-				if (round >= 5) alert('you win');
 				round++;
 			}
 		}

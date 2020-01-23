@@ -4,6 +4,7 @@ class Gun {
 		this.action = 'none';
 		this.angle = 0;
 		this.target = null;
+		this.createdFrame = frame;
 	}
 
 	update() {
@@ -36,6 +37,10 @@ class Gun {
 
 		this.translate.x = player.translate.x + (player.facingRight ? 2 : -2);
 		this.translate.y = player.translate.y - 6;
+
+		if (frame - this.createdFrame > 30 * 60) {
+			objects.guns.splice(objects.guns.indexOf(this), 1);
+		}
 
 		nok.line(
 			this.translate.x - Math.cos(this.angle), 
