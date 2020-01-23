@@ -1,14 +1,10 @@
 class Player {
 	constructor() {
-		this.health = 5;
-		this.power = 0;
-		this.items = [];
 		this.translate = {};
 		this.facingRight = true;
 		this.action = 'none';
 		this.pullingRef = 0;
 		this.pullX = 15;
-		this.inventory = {};
 	}
 
 	update() {

@@ -1,8 +1,6 @@
 class BadGuy2 {
 	constructor(translate) {
 		this.health = 25;
-		this.power = 0;
-		this.items = [];
 		this.xRand = rand(10, 70);
 		this.yRand = rand(30, 40);
 		this.oscRand = rand(0, 10);

@@ -25,7 +25,7 @@ class Bullet {
 
 	strike() {
 		for (var prop in objects) {
-			if (prop === 'badGuys' || prop === 'badGuy2s') {
+			if (prop === 'badGuys' || prop === 'badGuy2s' || prop === 'boss') {
 				for (var i = 0; i < objects[prop].length; i += 1) {
 					if (collision(this, objects[prop][i], 10, 3)) {
 						objects.bullets.splice(objects.bullets.indexOf(this), 1);

@@ -56,9 +56,9 @@ class Snake {
 			if (prop === 'badGuys' || prop === 'badGuy2s') {
 				for (var i = 0; i < objects[prop].length; i += 1) {
 					if (collision(this, objects[prop][i], 10, 3)) {
+						objects[prop][i].health -= 3;
 						for (var j = 0; j < 3; j += 1) {
 							objects.sparks.push(new Spark(objects[prop][i].translate));
-							objects[prop][i].health -= 1;
 						}
 					}
 				}

@@ -13,7 +13,6 @@ var gunCoords = [
 ];
 
 // try to make it so multiple playthroughs aren't necessary to know how to win (points should teach) (positive reinforcement)
-// powerups build new weapon
 // new enemies balance out new weapons
 // bosses in the slow parts
 // bonus points for guys killed in 5 frames for example
@@ -32,18 +31,15 @@ function draw(dt) {
 
 	if (running) {
 		nok.clear(0) //clear(pattern 0-6)
-		// nok.line(10, 10, 50, 25) //line(start x, start y, end x, end y)
-		// nok.rect(6, 20 + Math.sin(timer)*20, 20 + Math.cos(timer) * 20, 10, 10) // rect(pattern 0-6, x, y, width, height)
-		// nok.circle(Math.floor(Math.sin(timer) * 10), 70, 20) //circle(radius,x, y)
 
 		// ground
 		for (var i = 0; i < 5; i += 1) {
 			for (var j = 0; j < 5; j += 1) {
 				nok.line(
 					16 * i + 7 + (j % 2 === 0 ? 5 : 0), 
-					8 * j + 6, 
-					16 * i + 8 + (j % 2 === 0 ? 5 : 0), 
-					8 * j + 6
+					8 * j + 7, 
+					16 * i + 7 + (j % 2 === 0 ? 5 : 0), 
+					8 * j + 7
 				);
 			}
 		}
