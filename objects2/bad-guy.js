@@ -9,7 +9,7 @@ class BadGuy {
 		this.translate = {x: 20, y: this.yRand};
 		this.action = 'none';
 		this.createdFrame = frame;
-		this.combineTime = rand(60 * 10, 60 * 100); 
+		this.combineTime = rand(30 * 5, 30 * 15); 
 		this.joiner;
 		this.joined = false;
 	}
@@ -17,15 +17,16 @@ class BadGuy {
 	update() {
 		// collision with player
 		if (collision(this, player, 3, 3)) {
-			dead();
+			return dead();
 		}
 
 		if (this.action === 'none') {
 			this.translate.x = Math.floor(10 * Math.sin(timer + this.oscRand)) + this.xRand;
 			// collision with other bad guys
-			if (this.createdFrame > this.combineTime) {
+			if (frame - this.createdFrame > this.combineTime) {
 				for (var i = 0; i < objects.badGuys.length; i += 1) {
 					if (objects.badGuys[i] === this) continue;
+					if (objects.badGuys[i].joiner) continue;
 					if (collision(this, objects.badGuys[i], 8, 8)) {
 						this.action = 'joining';
 						this.joiner = objects.badGuys[i];
@@ -36,11 +37,6 @@ class BadGuy {
 			}
 		} else if (this.action === 'joining') {
 			// go towards each other
-			if (this.joiner.joined) {
-				this.joiner = null;
-				this.action = 'none';
-				return;
-			}
 			if (frame % 8 === 0) {
 				if (this.translate.x !== this.joiner.translate.x) {
 					this.translate.x += this.translate.x < this.joiner.translate.x ? 1 : -1;
@@ -56,16 +52,17 @@ class BadGuy {
 				objects.badGuys.splice(objects.badGuys.indexOf(this), 1);
 				objects.badGuys.splice(objects.badGuys.indexOf(this.joiner), 1);
 				objects.badGuy2s.push(new BadGuy2(this.translate));
+				return;
 			}
 		}
+
+		nok.sprite(badSpr, this.translate.x - 2, this.translate.y - 1);
 
 		if (this.health <= 0) {
 			objects.badGuys.splice(objects.badGuys.indexOf(this), 1);
 			score += 2;
 			if (frame % 7 === 0) objects.powerUps.push(new PowerUp(this.translate));
+			return;
 		}
-
-		nok.sprite(badSpr, this.translate.x - 2, this.translate.y - 1);
-		this.createdFrame++;
 	}
 }

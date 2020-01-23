@@ -2,7 +2,7 @@ class PowerUp {
 	constructor(translate) {
 		this.translate = {x: translate.x, y: translate.y};
 		this.created = frame;
-		this.type = frame%3;
+		this.type = frame%4;
 	}
 
 	update() {

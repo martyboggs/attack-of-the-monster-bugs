@@ -7,6 +7,10 @@ var running = true;
 var spawnRate; // set in reset
 var round = 1;
 var drawing;
+var gunVibrate = 0;
+var gunCoords = [
+	[20, 4], [20, 1], [23, 1], [26, 1],
+];
 
 // try to make it so multiple playthroughs aren't necessary to know how to win (points should teach) (positive reinforcement)
 // powerups build new weapon
@@ -45,8 +49,12 @@ function draw(dt) {
 		}
 
 		nok.number(score, 1, 1) //number(value, x, y)
+		// show gun progress
 		for (var i = 0; i < player.build.length; i += 1) {
-			nok.sprite(powerUpSpr[player.build[i]][frame%2], 20 + 5 * i, 1);
+			nok.sprite(powerUpSpr[player.build[i]][frame%2], 
+				gunCoords[i][0] + (frame%2===0?gunVibrate:0), 
+				gunCoords[i][1]
+			);
 		}
 
 		// gameplay
@@ -146,8 +154,12 @@ function buildGun(type) {
 	if (gunModel[player.build.length] === type) {
 		player.build.push(type);
 		if (player.build.length === gunModel.length) {
-			player.build = [];
-			new Gun();
+			gunVibrate = 1;
+			setTimeout(function () {
+				player.build = [];
+				objects.guns.push(new Gun());
+				gunVibrate = 0;
+			}, 2000);
 		}
 	} else {
 		player.build = [];
