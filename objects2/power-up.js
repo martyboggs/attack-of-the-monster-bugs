@@ -2,7 +2,7 @@ class PowerUp {
 	constructor(translate) {
 		this.translate = {x: translate.x, y: translate.y};
 		this.created = frame;
-		this.type = frame%4;
+		this.type = Math.floor(4 * Math.random());
 		this.saved = false;
 		this.lastCheck = false;
 		this.target = null;

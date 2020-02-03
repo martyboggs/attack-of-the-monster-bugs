@@ -39,7 +39,7 @@ class Snake {
 			this.translate.y = player.translate.y - 5;
 		}
 
-		if (spawnRate < 45 && spawnRate > 40 && frame % 500 === 0 && 
+		if (spawnInterval < 45 && spawnInterval > 40 && frame % 500 === 0 && 
 			(this.action === 'holstered' || this.action === 'striking')) {
 				this.action = 'none';
 				this.sleeping = 20;

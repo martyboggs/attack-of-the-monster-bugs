@@ -1,10 +1,10 @@
 class BadGuy {
 	constructor() {
 		this.health = 5;
-		this.xRand = player.translate.x > 42 ? rand(2, 40) : rand(44, 82);
-		this.yRand = player.translate.y > 24 ? rand(2, 22) : rand(26, 46);
+		this.x = player.translate.x > 42 ? rand(2, 40) : rand(44, 82);
+		this.y = player.translate.y > 24 ? rand(2, 22) : rand(26, 46);
 		this.oscRand = rand(0, 10);
-		this.translate = {x: 20, y: this.yRand};
+		this.translate = {x: 20, y: this.y};
 		this.action = 'none';
 		this.createdFrame = frame;
 		this.combineTime = rand(30 * 5, 30 * 15); 
@@ -19,7 +19,7 @@ class BadGuy {
 		}
 
 		if (this.action === 'none') {
-			this.translate.x = Math.floor(10 * Math.sin(timer + this.oscRand)) + this.xRand;
+			this.translate.x = 10 * Math.sin(timer + this.oscRand) + this.x;
 			// collision with other bad guys
 			if (frame - this.createdFrame > this.combineTime) {
 				for (var i = 0; i < objects.badGuys.length; i += 1) {

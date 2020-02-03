@@ -4,10 +4,11 @@ var snake;
 var frame = 0;
 var score = 0;
 var running = true;
-var spawnRate; // set in reset
+var spawnInterval; // set in reset
 var round = 1;
 var drawing;
 var enemies = ['badGuys', 'badGuy2s', 'bosses'];
+var bossAppeared = false;
 var gunVibrate = 0;
 var gunCoords = [
 	[20.5, 4.5], [20.5, 1.5], [23.5, 1.5], [26.5, 1.5],
@@ -50,17 +51,24 @@ function draw(dt) {
 		nok.number(score, 1, 1) //number(value, x, y)
 
 		// gameplay
-		if (frame % spawnRate === 0) {
+		if (frame % 120 === 0) {
+			if ([1, 12, 10, 8, 6, 4][round] && spawnInterval >= [1, 12, 10, 8, 6, 4][round]) {
+				spawnInterval -= 1;
+			} else if (spawnInterval >= 4) { // beyond round 5
+				spawnInterval -= 1;
+			} else {
+				spawnInterval = 50;
+				bossAppeared = false;
+				round++;
+			}
+		}
+		if (frame % spawnInterval === 0) {
 			objects.badGuys.push(new BadGuy());
 		}
-		if (frame % 120 === 0) {
-			if ([1, 12, 10, 8, 6, 4][round] && spawnRate >= [1, 12, 10, 8, 6, 4][round]) {
-				spawnRate -= 1;
-			} else if (spawnRate >= 4) { // beyond round 5
-				spawnRate -= 1;
-			} else {
-				spawnRate = 50;
-				round++;
+		if (spawnInterval === 40) {
+			if (!bossAppeared) {
+				bossAppeared = true;
+				objects.bosses.push(new Boss());
 			}
 		}
 		
@@ -128,7 +136,7 @@ function reset() {
 	running = true;
 	frame = 0;
 	score = 0;
-	spawnRate = 50;
+	spawnInterval = 50;
 	player.action = 'none';
 	player.translate = {x: 12, y: 15};
 	player.facingRight = true;
