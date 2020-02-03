@@ -31,7 +31,7 @@ class PowerUp {
 			}
 		} else {
 			// pick up powerup
-			if (collision(player, this, 2, 2)) {
+			if (collision(player, this, 3, 3)) {
 				if (this.type === 0) {
 					objects.powerUps.splice(objects.powerUps.indexOf(this), 1);
 					score += 1;

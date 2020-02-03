@@ -3,18 +3,14 @@ class Boss {
 		this.health = 55;
 		this.xRand = player.translate.x > 42 ? rand(2, 40) : rand(44, 82);
 		this.yRand = player.translate.y > 24 ? rand(2, 22) : rand(26, 46);
-		this.oscRand = rand(0, 10);
 		this.translate = {x: 20, y: this.yRand};
 		this.action = 'none';
 		this.createdFrame = frame;
-		this.combineTime = rand(30 * 5, 30 * 15); 
-		this.joiner;
-		this.joined = false;
 	}
 
 	update() {
 		// collision with player
-		if (collision(this, player, 3, 3)) {
+		if (frame - this.createdFrame > 60 && collision(this, player, 3, 3)) {
 			return dead();
 		}
 
@@ -27,8 +23,13 @@ class Boss {
 			return;
 		}
 		
+		this.translate.x += Math.sin(timer) * 20;
+		this.translate.y += Math.cos(timer) * 20;
+
+		// rect(pattern 0-6, x, y, width, height)
+		nok.rect(6, this.translate.x - 5, this.translate.y - 5, 10, 10) 
+
 		// nok.line(10, 10, 50, 25) //line(start x, start y, end x, end y)
-		// nok.rect(6, 20 + Math.sin(timer)*20, 20 + Math.cos(timer) * 20, 10, 10) // rect(pattern 0-6, x, y, width, height)
 		// nok.circle(Math.floor(Math.sin(timer) * 10), 70, 20) //circle(radius,x, y)
 	}
 }

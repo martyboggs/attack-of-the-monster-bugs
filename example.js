@@ -13,6 +13,8 @@ var gunCoords = [
 	[20.5, 4.5], [20.5, 1.5], [23.5, 1.5], [26.5, 1.5],
 ];
 
+// pitch range A#6 D#9
+
 // try to make it so multiple playthroughs aren't necessary to know how to win (points should teach) (positive reinforcement)
 // new enemies balance out new weapons
 // bosses in the slow parts
@@ -77,6 +79,14 @@ function draw(dt) {
 
 function rand(a, b) {
 	return Math.round((b - a) * Math.random() + a);
+}
+
+function followAngle(a1, a2, rad) {
+	if (Math.abs(a1 - a2) > Math.PI) {
+		return a1 < a2 ? -rad : rad;
+	} else {
+		return a1 < a2 ? rad : -rad;
+	}
 }
 
 function flip(arr) {

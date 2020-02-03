@@ -17,8 +17,12 @@ class Gun {
 			}
 		} else if (this.action === 'aiming') {
 			var targetAngle = Math.atan2(this.target.translate.y - this.translate.y, this.target.translate.x - this.translate.x);
-			if (this.angle > targetAngle) this.angle -= Math.PI / 90
-			if (this.angle < targetAngle) this.angle += Math.PI / 90
+			if (this.angle > Math.PI) this.angle -= 2 * Math.PI;
+			else if (this.angle < -Math.PI) this.angle += 2 * Math.PI;
+			// Aiming
+			// if (this.angle > targetAngle) this.angle -= Math.PI / 90
+			// if (this.angle < targetAngle) this.angle += Math.PI / 90
+			this.angle += followAngle(this.angle, targetAngle, Math.PI / 90);
 			// FIRE!
 			if (Math.abs(this.angle - targetAngle) < 0.1) {
 				if (frame % 3 === 0) {
