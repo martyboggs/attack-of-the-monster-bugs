@@ -23,6 +23,7 @@ class BadGuy2 {
 		}
 
 		if (this.health <= 0) {
+			blip.play();
 			objects.badGuy2s.splice(objects.badGuy2s.indexOf(this), 1);
 			score += 5;
 			if (frame % 3 === 0) objects.powerUps.push(new PowerUp(this.translate));

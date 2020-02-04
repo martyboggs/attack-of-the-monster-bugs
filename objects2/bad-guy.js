@@ -57,6 +57,7 @@ class BadGuy {
 		nok.sprite(badSpr, this.translate.x - 2, this.translate.y - 1);
 
 		if (this.health <= 0) {
+			blip.play();
 			objects.badGuys.splice(objects.badGuys.indexOf(this), 1);
 			score += 2;
 			if (frame % 7 === 0) objects.powerUps.push(new PowerUp(this.translate));

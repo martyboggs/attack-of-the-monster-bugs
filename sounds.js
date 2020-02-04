@@ -6,6 +6,12 @@ var music = $buzz({
 });
 music.play();
 
+var blip = $buzz({
+	src: 'sounds/blip.wav',
+	volume: 0.5,
+	preload: true,
+});
+
 // document.body.addEventListener('keydown', audioFixer, {once: true});
 // document.body.addEventListener('click', audioFixer, {once: true});
 // var audioFixed = false;
