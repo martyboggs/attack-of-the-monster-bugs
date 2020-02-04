@@ -3,7 +3,7 @@ var player;
 var snake;
 var frame = 0;
 var score = 0;
-var running = true;
+var state;
 var spawnInterval; // set in reset
 var round = 1;
 var drawing;
@@ -29,11 +29,21 @@ function init() {
 	objects.players.push(player);
 	objects.snakes.push(snake);
 	reset();
+	state = 'title';
 }
 function draw(dt) {
 	timer += 0.1*dt
 
-	if (running) {
+	if (state === 'title') {
+		nok.clear(0) //clear(pattern 0-6)
+		nok.sprite(titleImage, 0, 0);
+		for (var key in nok.key) {
+			if (nok.key[key]) {
+				state = 'game';
+				break;
+			}
+		}
+	} else if (state === 'game') {
 		nok.clear(0) //clear(pattern 0-6)
 
 		// ground
@@ -124,7 +134,7 @@ function invert() {
 
 function dead() {
 	if (drawing) return;
-	running = false;
+	state = '';
 	invert();
 	setTimeout(function () {
 		invert();
@@ -133,7 +143,7 @@ function dead() {
 }
 
 function reset() {
-	running = true;
+	state = 'game';
 	frame = 0;
 	score = 0;
 	spawnInterval = 50;
