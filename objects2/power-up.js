@@ -32,7 +32,7 @@ class PowerUp {
 		} else {
 			// pick up powerup
 			if (collision(player, this, 3, 3)) {
-				if (this.type === 0 || !gunImminent) { // just give 'em a point if gun is imminent
+				if (this.type === 0 || gunImminent) { // just give 'em a point if gun is imminent
 					good1.play();
 					objects.powerUps.splice(objects.powerUps.indexOf(this), 1);
 					score += 1;
