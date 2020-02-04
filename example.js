@@ -40,6 +40,7 @@ function draw(dt) {
 		for (var key in nok.key) {
 			if (nok.key[key]) {
 				state = 'game';
+				music.stop();
 				break;
 			}
 		}
