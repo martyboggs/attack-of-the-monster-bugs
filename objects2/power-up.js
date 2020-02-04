@@ -3,7 +3,6 @@ class PowerUp {
 		this.translate = {x: translate.x, y: translate.y};
 		this.created = frame;
 		this.type = Math.floor(4 * Math.random());
-		this.saved = false;
 		this.lastCheck = false;
 		this.target = null;
 	}
@@ -12,19 +11,13 @@ class PowerUp {
 		if (this.target) {
 			this.translate.x = lerp(this.translate.x, this.target.x, 0.2);
 			this.translate.y = lerp(this.translate.y, this.target.y, 0.2);
-			if (!this.saved) {
-				this.saved = true;
-				player.build.push(this);
-			}
+
+			// gun part reached top
 			if (!this.lastCheck && 
 				Math.abs(this.translate.x - this.target.x) < 0.1 &&
 				Math.abs(this.translate.y - this.target.y) < 0.1) {
 				this.lastCheck = true;
-				if (player.build.length === 1) good1.play();
-				else if (player.build.length === 2) good2.play();
-				else if (player.build.length === 3) good3.play();
-				else if (player.build.length === 4) {
-					good4.play();
+				if (player.build.length === 4) {
 					gunVibrate = 1;
 					setTimeout(function () {
 						objects.guns.push(new Gun());
@@ -47,6 +40,13 @@ class PowerUp {
 							x: gunCoords[player.build.length][0],
 							y: gunCoords[player.build.length][1]
 						};
+						// add gun section
+						player.build.push(this);
+						// sound
+						if (player.build.length === 1) good1.play();
+						else if (player.build.length === 2) good2.play();
+						else if (player.build.length === 3) good3.play();
+						else if (player.build.length === 4) good4.play();
 					} else {
 						objects.powerUps.splice(objects.powerUps.indexOf(this), 1);
 						gunClear();
