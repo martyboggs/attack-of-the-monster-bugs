@@ -10,6 +10,7 @@ var drawing;
 var enemies = ['badGuys', 'badGuy2s', 'bosses'];
 var bossAppeared = false;
 var gunVibrate = 0;
+var gunImminent = false;
 var gunCoords = [
 	[20.5, 4.5], [20.5, 1.5], [23.5, 1.5], [26.5, 1.5],
 ];
@@ -164,7 +165,7 @@ function gunClear() {
 	for (var i = 0; i < player.build.length; i += 1) {
 		objects.powerUps.splice(objects.powerUps.indexOf(player.build[i]), 1);
 	}
-	player.build = [];
+	player.build.length = 0;
 }
 
 function lerp(start, end, amt) {

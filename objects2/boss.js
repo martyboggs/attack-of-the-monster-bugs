@@ -19,7 +19,7 @@ class Boss {
 		if (this.action === 'entrance') {
 			this.translate.x -= 0.8;
 			this.translate.y = this.y + 10 * Math.cos(timer);
-			if (this.translate.x < this.x) this.action = 'circling';
+			if (this.translate.x < this.x + 10 * Math.sin(timer)) this.action = 'circling';
 		} else if (this.action === 'circling') {
 			this.translate.x = this.x + 10 * Math.sin(timer);
 			this.translate.y = this.y + 10 * Math.cos(timer);

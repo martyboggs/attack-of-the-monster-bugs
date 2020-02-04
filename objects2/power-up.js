@@ -19,11 +19,13 @@ class PowerUp {
 				this.lastCheck = true;
 				if (player.build.length === 4) {
 					gunVibrate = 1;
+					gunImminent = true;
 					setTimeout(function () {
 						objects.guns.push(new Gun());
 						gun.play();
 						gunVibrate = 0;
 						gunClear();
+						gunImminent = false;
 					}, 2000);
 				}
 			}
@@ -35,7 +37,7 @@ class PowerUp {
 					objects.powerUps.splice(objects.powerUps.indexOf(this), 1);
 					score += 1;
 				} else {
-					if (gunModel[player.build.length] === this.type) {
+					if (!gunImminent && gunModel[player.build.length] === this.type) {
 						this.target = {
 							x: gunCoords[player.build.length][0],
 							y: gunCoords[player.build.length][1]
@@ -59,6 +61,7 @@ class PowerUp {
 			if (frame - this.created >= 20) {
 				if (snake.action === 'striking' && collision(this, snake, 10, 3)) {
 					objects.powerUps.splice(objects.powerUps.indexOf(this), 1);
+					blip.play();
 				}
 			}
 
