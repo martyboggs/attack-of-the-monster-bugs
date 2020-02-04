@@ -17,7 +17,7 @@ class PowerUp {
 				Math.abs(this.translate.x - this.target.x) < 0.1 &&
 				Math.abs(this.translate.y - this.target.y) < 0.1) {
 				this.lastCheck = true;
-				if (player.build.length === 4) {
+				if (!gunImminent && player.build.length === 4) {
 					gunVibrate = 1;
 					gunImminent = true;
 					setTimeout(function () {
@@ -32,12 +32,12 @@ class PowerUp {
 		} else {
 			// pick up powerup
 			if (collision(player, this, 3, 3)) {
-				if (this.type === 0) {
+				if (this.type === 0 || !gunImminent) { // just give 'em a point if gun is imminent
 					good1.play();
 					objects.powerUps.splice(objects.powerUps.indexOf(this), 1);
 					score += 1;
 				} else {
-					if (!gunImminent && gunModel[player.build.length] === this.type) {
+					if (gunModel[player.build.length] === this.type) {
 						this.target = {
 							x: gunCoords[player.build.length][0],
 							y: gunCoords[player.build.length][1]
