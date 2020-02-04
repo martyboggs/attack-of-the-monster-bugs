@@ -11,6 +11,7 @@ class Snake {
 			this.translate.x = Math.floor(4 * Math.sin(timer)) + 50;
 			if (this.sleeping <= 0 && collision(player, this, 10, 3)) {
 				this.action = 'pulling';
+				catchSnake.play();
 			}
 			this.sleeping--;
 		} else if (this.action === 'pulling') {

@@ -48,6 +48,11 @@ var gun = $buzz({
 	preload: true,
 });
 
+var catchSnake = $buzz({
+	src: 'sounds/catch-snake.wav',
+	volume: 0.5,
+	preload: true,
+});
 
 
 
