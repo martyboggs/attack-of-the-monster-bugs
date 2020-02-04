@@ -24,6 +24,7 @@ class PowerUp {
 					gunVibrate = 1;
 					setTimeout(function () {
 						objects.guns.push(new Gun());
+						gun.play();
 						gunVibrate = 0;
 						gunClear();
 					}, 2000);
@@ -41,9 +42,14 @@ class PowerUp {
 							x: gunCoords[player.build.length][0],
 							y: gunCoords[player.build.length][1]
 						};
+						if (gunModel.length === 1) good1.play();
+						if (gunModel.length === 2) good2.play();
+						if (gunModel.length === 3) good3.play();
+						if (gunModel.length === 4) good4.play();
 					} else {
 						objects.powerUps.splice(objects.powerUps.indexOf(this), 1);
 						gunClear();
+						bad.play();
 					}
 				}
 			}
