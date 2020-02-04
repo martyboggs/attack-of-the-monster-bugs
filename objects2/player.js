@@ -5,6 +5,7 @@ class Player {
 		this.action = 'none';
 		this.pullingRef = 0;
 		this.pullX = 15;
+		this.model = [];
 	}
 
 	update() {
