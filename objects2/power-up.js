@@ -20,7 +20,11 @@ class PowerUp {
 				Math.abs(this.translate.x - this.target.x) < 0.1 &&
 				Math.abs(this.translate.y - this.target.y) < 0.1) {
 				this.lastCheck = true;
-				if (player.build.length === gunModel.length) {
+				if (player.build.length === 1) good1.play();
+				else if (player.build.length === 2) good2.play();
+				else if (player.build.length === 3) good3.play();
+				else if (player.build.length === 4) {
+					good4.play();
 					gunVibrate = 1;
 					setTimeout(function () {
 						objects.guns.push(new Gun());
@@ -34,6 +38,7 @@ class PowerUp {
 			// pick up powerup
 			if (collision(player, this, 3, 3)) {
 				if (this.type === 0) {
+					good1.play();
 					objects.powerUps.splice(objects.powerUps.indexOf(this), 1);
 					score += 1;
 				} else {
@@ -42,10 +47,6 @@ class PowerUp {
 							x: gunCoords[player.build.length][0],
 							y: gunCoords[player.build.length][1]
 						};
-						if (gunModel.length === 1) good1.play();
-						if (gunModel.length === 2) good2.play();
-						if (gunModel.length === 3) good3.play();
-						if (gunModel.length === 4) good4.play();
 					} else {
 						objects.powerUps.splice(objects.powerUps.indexOf(this), 1);
 						gunClear();

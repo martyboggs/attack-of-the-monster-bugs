@@ -60,4 +60,15 @@ class Player {
 
 		nok.sprite(spr, this.translate.x - 3, this.translate.y - 11)
 	}
+
+	dead() {
+		bad.play();
+		if (drawing) return;
+		state = '';
+		invert();
+		setTimeout(function () {
+			invert();
+			reset();
+		}, 2000);
+	}
 }

@@ -133,16 +133,6 @@ function invert() {
 	W = c;
 }
 
-function dead() {
-	if (drawing) return;
-	state = '';
-	invert();
-	setTimeout(function () {
-		invert();
-		reset();
-	}, 2000);
-}
-
 function reset() {
 	state = 'game';
 	frame = 0;

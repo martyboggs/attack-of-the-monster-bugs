@@ -13,7 +13,7 @@ class Boss {
 	update() {
 		// collision with player
 		if (frame - this.createdFrame > 60 && collision(this, player, 3, 3)) {
-			return dead();
+			return player.dead();
 		}
 
 		if (this.action === 'entrance') {
@@ -27,6 +27,7 @@ class Boss {
 		// rect(pattern 0-6, x, y, width, height)
 		nok.rect((round + 5)%6 + 1, this.translate.x - 5, this.translate.y - 5, 10, 10) 
 		if (this.health <= 0) {
+			blip.play();
 			objects.bosses.splice(objects.bosses.indexOf(this), 1);
 			score += 20;
 			for (var i = 0; i < 3; i += 1) {

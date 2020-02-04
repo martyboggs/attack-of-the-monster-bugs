@@ -15,7 +15,7 @@ class BadGuy {
 	update() {
 		// collision with player
 		if (collision(this, player, 3, 3)) {
-			return dead();
+			return player.dead();
 		}
 
 		if (this.action === 'none') {

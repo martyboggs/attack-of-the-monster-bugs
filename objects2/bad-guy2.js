@@ -9,7 +9,7 @@ class BadGuy2 {
 	update() {
 		// collision with player
 		if (collision(this, player, 4, 4)) {
-			dead();
+			player.dead();
 		}
 
 		// follow
