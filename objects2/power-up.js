@@ -51,8 +51,12 @@ class PowerUp {
 						else if (player.build.length === 4) good4.play();
 					} else {
 						objects.powerUps.splice(objects.powerUps.indexOf(this), 1);
-						gunClear();
-						bad.play();
+						if (player.build.length) {
+							gunClear();
+							bad.play();
+						} else {
+							blip.play();
+						}
 					}
 				}
 			}
