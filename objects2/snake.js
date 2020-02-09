@@ -25,7 +25,7 @@ class Snake {
 				player.translate.y - 13 + wobble);
 		} else if (this.action === 'holstered') {
 			this.slitherSpeed = 1;
-			if (nok.key.six) {
+			if (nok.key.six || nok.key.j) {
 				this.action = 'striking';
 				this.slitherSpeed = 10;
 			}
@@ -33,7 +33,7 @@ class Snake {
 			this.translate.y = player.translate.y - 5;
 		} else if (this.action === 'striking') {
 			this.strike();
-			if (!nok.key.six) {
+			if (!nok.key.six && !nok.key.j) {
 				this.action = 'holstered';
 			}
 			this.translate.x = player.translate.x + (player.facingRight ? 9 : -9);

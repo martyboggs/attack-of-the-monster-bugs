@@ -83,6 +83,9 @@ window.addEventListener("keydown" ,(event)=>{
 		case "KeyC":
 			nok.key.octothorpe = true;
 			break;
+		case "KeyJ":
+			nok.key.j = true;
+			break;
 		
 	}
 });
@@ -147,7 +150,9 @@ window.addEventListener("keyup" ,(event)=>{
 		case "KeyC":
 			nok.key.octothorpe = false;
 			break;
-		
+		case "KeyJ":
+			nok.key.j = false;
+			break;			
 	}
 });
 
